@@ -44,3 +44,15 @@ def ultimosCinco(lista):
 
 def size(catalog):
     return m.size(catalog)
+
+def sizeIndex(catalog, tipo):
+    return m.sizeIndex(catalog, tipo)
+
+def AvistamientoCiudad(catalog, ciudad_entry):
+    return m.AvistamientoCiudad(catalog, ciudad_entry)
+
+def primerosTres(lista):
+    return m.primerosTres(lista)
+
+def ultimosTres(lista):
+    return m.ultimosTres(lista)

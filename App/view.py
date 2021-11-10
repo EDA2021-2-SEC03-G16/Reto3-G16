@@ -50,7 +50,20 @@ def printDatos(avistamientos):
                 print (avistamiento)
                 print('\n')
     else:
-        print ("No se encontraron avistamientos")
+        print ("No se encontraron datos.")
+
+def Requerimiento1(catalogo, ciudad):
+    city=c.AvistamientoCiudad(catalogo, ciudad.lower())
+    primeros=c.primerosTres(city)
+    ultimos=c.ultimosTres(city)
+    total=c.sizeIndex(catalogo, "cityIndex")
+    print("Hay en total " + str(total) + " ciudades diferentes con UFO sightings..." + "\n")
+    print("En " +ciudad+ " hay " + str(lt.size(city)) + " avistamientos.")    
+    print('Los 3 primeros: \n')
+    printDatos(primeros)
+    print('Los 3 ultimos: \n') 
+    printDatos(ultimos)
+
 
 """
 Menu principal
@@ -77,7 +90,12 @@ while True:
         print("Tiempo empleado: " + str(elapsed_time_mseg))
 
     elif int(inputs[0]) == 2:
-        pass
+        ciudad = input("Ingrese la ciudad a consultar: ")
+        start_time = time.process_time()
+        Requerimiento1(catalogo, ciudad)
+        stop_time = time.process_time()
+        elapsed_time_mseg = (stop_time - start_time)*1000
+        print("Tiempo de ejecución: " + str(elapsed_time_mseg))
     else:
         sys.exit(0)
 sys.exit(0)

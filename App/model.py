@@ -31,7 +31,7 @@ from DISClib.DataStructures import mapentry as me
 from DISClib.Algorithms.Sorting import shellsort as sa
 assert cf
 from DISClib.ADT import map as mp
-from DISClib.Algorithms.Sorting import mergesort as ms
+from DISClib.Algorithms.Sorting import mergesort as msort
 from DISClib.ADT import orderedmap as ordmap
 import datetime as dtime
 from datetime import date, timedelta
@@ -209,3 +209,19 @@ def ultimosCinco(lista):
 
 def size(analyzer):
     return lt.size(analyzer['avistamientos'])
+
+def sizeIndex(analyzer, tipo):
+    return ordmap.size(analyzer[tipo])
+
+def AvistamientoCiudad(catalog, ciudad_entry):
+    exist=ordmap.contains(catalog["cityIndex"], ciudad_entry)
+    if exist:
+        avist=ordmap.get(catalog["cityIndex"], ciudad_entry)["value"]
+    msort.sort(avist, cmpfunction= cmpFechas2)
+    return avist
+
+def primerosTres(lista):
+    return lt.subList(lista,1,3)
+    
+def ultimosTres(lista):
+    return lt.subList(lista,lt.size(lista)-2,3)
