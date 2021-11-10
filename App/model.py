@@ -225,3 +225,57 @@ def primerosTres(lista):
     
 def ultimosTres(lista):
     return lt.subList(lista,lt.size(lista)-2,3)
+
+def primerosn(lista,n):
+    return lt.subList(lista,1,n)
+    
+def ultimosn(lista,n):
+    return lt.subList(lista,lt.size(lista)-(n-1),n)
+
+def requerimiento2(catalog,minimo,maximo):
+    datos=catalog['durationIndex']
+    llaves=ordmap.keys(datos,float(minimo),float(maximo))
+    i=0
+    for llave in lt.iterator(llaves):
+        pareja=ordmap.get(datos,llave)
+        lista=me.getValue(pareja)
+        i+= lt.size(lista)
+    primeros=lt.newList()
+    j=0
+    while j<3:
+        llave2=lt.removeFirst(llaves)
+        pareja2=ordmap.get(datos,llave2)
+        lista2=me.getValue(pareja2)
+        msort.sort(lista2,cmpCountryCity)
+        for e in lt.iterator(lista2):
+            lt.addLast(primeros,e)
+        j+=1
+    ultimos=lt.newList("LINKED_LIST")
+    conteo=0
+    while conteo<3:
+        llave3=lt.removeLast(llaves)
+        pareja3=ordmap.get(datos,llave3)
+        lista3=me.getValue(pareja3)
+        msort.sort(lista3,cmpCountryCity)
+        for el in lt.iterator(lista3):
+            lt.addLast(ultimos,el)
+        conteo+=1      
+    respuesta=lt.newList("LINKED_LIST")
+    lt.addLast(respuesta,i)
+    lt.addLast(respuesta,primerosn(primeros,3))
+    lt.addLast(respuesta,primerosn(ultimos,3))
+    return respuesta
+
+def maxKey(analyzer, tipo):
+    return ordmap.maxKey(analyzer[tipo])
+
+def maximaDuracion(catalog):
+    mapa=catalog['durationIndex']
+    llave=ordmap.maxKey(mapa)
+    pareja=ordmap.get(mapa,llave)
+    valor=me.getValue(pareja)
+    num=lt.size(valor)
+    respuesta=lt.newList("LINKED_LIST")
+    lt.addLast(respuesta,llave)
+    lt.addLast(respuesta,num)
+    return respuesta

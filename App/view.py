@@ -51,8 +51,9 @@ def printDatos(avistamientos):
                 print('\n')
     else:
         print ("No se encontraron datos.")
+    
 
-def Requerimiento1(catalogo, ciudad):
+def printReq1(catalogo, ciudad):
     city=c.AvistamientoCiudad(catalogo, ciudad.lower())
     primeros=c.primerosTres(city)
     ultimos=c.ultimosTres(city)
@@ -62,6 +63,21 @@ def Requerimiento1(catalogo, ciudad):
     print('Los 3 primeros: \n')
     printDatos(primeros)
     print('Los 3 ultimos: \n') 
+    printDatos(ultimos)
+
+def printReq2(catalog,minimo,maximo):
+    max=c.maximaDuracion(catalog)
+    lmax=lt.removeFirst(max)
+    nmax=lt.removeFirst(max)
+    datos=c.requerimiento2(catalog,minimo,maximo)
+    rango= lt.removeFirst(datos)
+    primeros=lt.removeFirst(datos)
+    ultimos=lt.removeFirst(datos)
+    print("El numero de avistamientos con la duracion (seg) mas larga registrada " + str(lmax) + " es: " + str(nmax))
+    print("El numero de avistamientos en el rango " + str(minimo) + ", " + str(maximo) + " es: " + str(rango))
+    print("Primeros 3 en el rango son: ")
+    printDatos(primeros)
+    print("Ultimos 3 en el rango son: ")
     printDatos(ultimos)
 
 
@@ -92,10 +108,19 @@ while True:
     elif int(inputs[0]) == 2:
         ciudad = input("Ingrese la ciudad a consultar: ")
         start_time = time.process_time()
-        Requerimiento1(catalogo, ciudad)
+        printReq1(catalogo, ciudad)
         stop_time = time.process_time()
         elapsed_time_mseg = (stop_time - start_time)*1000
-        print("Tiempo de ejecución: " + str(elapsed_time_mseg))
+        print("Tiempo empleado: " + str(elapsed_time_mseg))
+
+    elif int(inputs[0]) == 3:
+        minimo = input("Ingrese la minima duración: ")
+        maximo = input("Ingrese la maxima duración: ")
+        start_time = time.process_time()
+        printReq2(catalogo,minimo,maximo)
+        stop_time = time.process_time()
+        elapsed_time_mseg = (stop_time - start_time)*1000
+        print("Tiempo empleado: " + str(elapsed_time_mseg))
     else:
         sys.exit(0)
 sys.exit(0)

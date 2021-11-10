@@ -56,3 +56,10 @@ def primerosTres(lista):
 
 def ultimosTres(lista):
     return m.ultimosTres(lista)
+
+def maximaDuracion(catalog):
+    return m.maximaDuracion(catalog)
+
+def requerimiento2(catalog,minimo,maximo):
+    return m.requerimiento2(catalog,minimo,maximo)
+
