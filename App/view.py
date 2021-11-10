@@ -21,25 +21,36 @@
  """
 
 import config as cf
+import time
 import sys
-import controller
+import controller as c
 from DISClib.ADT import list as lt
 assert cf
 
 
-"""
-La vista se encarga de la interacción con el usuario
-Presenta el menu de opciones y por cada seleccion
-se hace la solicitud al controlador para ejecutar la
-operación solicitada
-"""
-
 def printMenu():
-    print("Bienvenido")
-    print("1- Cargar información en el catálogo")
-    print("2- ")
-
+    print("*******************************************")
+    print("              Bienvenido                   ")
+    print("1- Cargar información en el catálogo.")
+    print("2- Contar avistamientos en una ciudad.")
+    print("3- Contar los avistamientos por duración")
+    print("4- Contar avistamientos por hora/minutos del día.")
+    print("5- Contar avistamientos en un rango de fechas.")
+    print("6- Contar avistamientos de una zona geografíca")
+    print("0- Salir")
+    print("*******************************************")
 catalog = None
+
+
+def printDatos(avistamientos):
+    size = lt.size(avistamientos)
+    if size>0:
+        for avistamiento in lt.iterator(avistamientos):
+            if avistamiento is not None:
+                print (avistamiento)
+                print('\n')
+    else:
+        print ("No se encontraron avistamientos")
 
 """
 Menu principal
@@ -49,10 +60,24 @@ while True:
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
         print("Cargando información de los archivos ....")
+        start_time = time.process_time()
+        catalogo=c.initCatalog()
+        c.loadData(catalogo)
+        lst = catalogo['avistamientos']
+        primeros=c.primerosCinco(lst)
+        ultimos=c.ultimosCinco(lst)
+        print('Archivos cargados: ' + str(c.size(catalogo)))
+        print('\n')
+        print('Primeros 5 datos: \n')
+        printDatos(primeros)
+        print('Ultimos 5 datos: \n') 
+        printDatos(ultimos)
+        stop_time = time.process_time()
+        elapsed_time_mseg = (stop_time - start_time)*1000
+        print("Tiempo empleado: " + str(elapsed_time_mseg))
 
     elif int(inputs[0]) == 2:
         pass
-
     else:
         sys.exit(0)
 sys.exit(0)

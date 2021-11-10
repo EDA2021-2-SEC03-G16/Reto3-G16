@@ -21,18 +21,26 @@
  """
 
 import config as cf
-import model
+import model as m
 import csv
 
+def initCatalog():
+    catalog = m.newCatalog()
+    return catalog
 
-"""
-El controlador se encarga de mediar entre la vista y el modelo.
-"""
+def loadData(catalogo):
+    file = cf.data_dir + 'UFOS-utf8-small.csv'
+    input_file = csv.DictReader(open(file, encoding="utf-8"),
+                                delimiter=",")
+    for avistamiento in input_file:
+        m.addAvistamiento(catalogo, avistamiento)
+    return catalogo
 
-# Inicialización del Catálogo de libros
+def primerosCinco(lista):
+    return m.primerosCinco(lista)
+    
+def ultimosCinco(lista):
+    return m.ultimosCinco(lista)
 
-# Funciones para la carga de datos
-
-# Funciones de ordenamiento
-
-# Funciones de consulta sobre el catálogo
+def size(catalog):
+    return m.size(catalog)
