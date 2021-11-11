@@ -57,7 +57,7 @@ def printReq1(catalogo, ciudad):
     city=c.AvistamientoCiudad(catalogo, ciudad.lower())
     primeros=c.primerosTres(city)
     ultimos=c.ultimosTres(city)
-    total=c.sizeIndex(catalogo, "cityIndex")
+    total=c.sizeIndex(catalogo, "indexCiudad")
     print("Hay en total " + str(total) + " ciudades diferentes con UFO sightings..." + "\n")
     print("En " +ciudad+ " hay " + str(lt.size(city)) + " avistamientos.")    
     print('Los 3 primeros: \n')
@@ -65,12 +65,13 @@ def printReq1(catalogo, ciudad):
     print('Los 3 ultimos: \n') 
     printDatos(ultimos)
 
-def printReq2(catalog,minimo,maximo):
-    max=c.maximaDuracion(catalog)
+
+def printReq2(catalogo,minimo,maximo):
+    max=c.maximaDuracion(catalogo)
     lmax=lt.removeFirst(max)
     nmax=lt.removeFirst(max)
-    datos=c.requerimiento2(catalog,minimo,maximo)
-    rango= lt.removeFirst(datos)
+    datos=c.requerimiento2(catalogo,minimo,maximo)
+    rango=lt.removeFirst(datos)
     primeros=lt.removeFirst(datos)
     ultimos=lt.removeFirst(datos)
     print("El numero de avistamientos con la duracion (seg) mas larga registrada " + str(lmax) + " es: " + str(nmax))
@@ -80,6 +81,35 @@ def printReq2(catalog,minimo,maximo):
     print("Ultimos 3 en el rango son: ")
     printDatos(ultimos)
 
+
+def printReq3(catalogo, hora_i, hora_f):
+    hora=c.maxKey(catalogo, "hourIndex")
+    tamanio=lt.size(c.avistamientoHora(catalogo, hora))
+    orden=c.avistamientoOrdenadoHora(catalogo, hora_i, hora_f)
+    primeros=c.primerosTres(orden)
+    ultimos=c.ultimosTres(orden)
+    print("Hay " + str(c.sizeIndex(catalogo, "hourIndex")) + " UFO en los tiempos consultados.\n")
+    print("El último avistamiento en el tiempo es: " +str(hora) + ":" + str(tamanio) + "\n")
+    print("Hay " + str(lt.size(orden)) + " avistamientos el rango " + hora_i + " y " + hora_f+'\n') 
+    print('Primeros 3 en el rango: ')
+    printDatos(primeros)
+    print('Ultimos 3 en el rango: ') 
+    printDatos(ultimos)
+
+def printReq4(catalogo,fecha1,fecha2):
+    fecha=c.fechaAntigua(catalogo)
+    f1=lt.removeFirst(fecha)
+    f2=lt.removeFirst(fecha)
+    datos=c.requerimiento4(catalogo,fecha1,fecha2)
+    rango=lt.removeFirst(datos)
+    primeros=lt.removeFirst(datos)
+    ultimos=lt.removeFirst(datos)
+    print("Avistamientos con la fecha mas antigua registrada " + str(f1) + " es: " + str(f2))
+    print("Hay " + str(rango)+" avistamientos en el rango " + str(fecha1) + " y " + str(fecha2))
+    print("Primeros 3 avistamientos: ")
+    printDatos(primeros)
+    print("Ultimos 3 avistamientos: ")
+    printDatos(ultimos)
 
 """
 Menu principal
@@ -121,6 +151,25 @@ while True:
         stop_time = time.process_time()
         elapsed_time_mseg = (stop_time - start_time)*1000
         print("Tiempo empleado: " + str(elapsed_time_mseg))
+
+    elif int(inputs[0]) == 4:
+        hora_i=input("Hora minima (HH:MM): ")
+        hora_f=input("Hora maxima (HH:MM): ")
+        start_time=time.process_time()
+        printReq3(catalogo, hora_i, hora_f)
+        stop_time = time.process_time()
+        elapsed_time_mseg = (stop_time - start_time)*1000
+        print("Tiempo empleado: " + str(elapsed_time_mseg))
+
+    elif int(inputs[0]) == 5:
+        fecha1=input("Fecha inicial(YYYY-MM-DD): ")
+        fecha2=input("Fecha final (YYYY-MM-DD): ")
+        start_time=time.process_time()
+        printReq4(catalogo,fecha1,fecha2)
+        stop_time=time.process_time()
+        elapsed_time_mseg = (stop_time - start_time)*1000
+        print("Tiempo empleado: " + str(elapsed_time_mseg))
+    
     else:
         sys.exit(0)
 sys.exit(0)

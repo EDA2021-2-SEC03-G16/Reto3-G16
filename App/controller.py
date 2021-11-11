@@ -57,9 +57,23 @@ def primerosTres(lista):
 def ultimosTres(lista):
     return m.ultimosTres(lista)
 
-def maximaDuracion(catalog):
-    return m.maximaDuracion(catalog)
+def maximaDuracion(catalogo):
+    return m.maximaDuracion(catalogo)
 
-def requerimiento2(catalog,minimo,maximo):
-    return m.requerimiento2(catalog,minimo,maximo)
+def requerimiento2(catalogo,minimo,maximo):
+    return m.requerimiento2(catalogo,minimo,maximo)
 
+def maxKey(catalogo, tipo):
+    return m.maxKey(catalogo, tipo)
+
+def avistamientoHora(catalogo, hora):
+    return m.avistamientoHora(catalogo, hora)
+
+def avistamientoOrdenadoHora(catalogo, hora_i, hora_f):
+    return m.avistamientoOrdenadoHora(catalogo, hora_i, hora_f)
+
+def requerimiento4(catalog,minimo,maximo):
+    return m.requerimiento4(catalog,minimo,maximo)
+
+def fechaAntigua(catalog):
+    return m.fechaAntigua(catalog)
