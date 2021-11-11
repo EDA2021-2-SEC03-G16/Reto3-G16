@@ -29,7 +29,7 @@ def initCatalog():
     return catalog
 
 def loadData(catalogo):
-    file = cf.data_dir + 'UFOS-utf8-small.csv'
+    file = cf.data_dir + 'UFOS-utf8-large.csv'
     input_file = csv.DictReader(open(file, encoding="utf-8"),
                                 delimiter=",")
     for avistamiento in input_file:
@@ -77,3 +77,6 @@ def requerimiento4(catalog,minimo,maximo):
 
 def fechaAntigua(catalog):
     return m.fechaAntigua(catalog)
+
+def avistamientoLatLong(catalogo, longitud1, longitud2, latitud1, latitud2):
+    return m.avistamientoLatLong(catalogo, longitud1, longitud2, latitud1, latitud2)

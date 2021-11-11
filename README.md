@@ -1,3 +1,7 @@
+
+Req. 2: Luis Borbon Holguin - l.borbonh@unianes.edu.co - 202110887.
+Req. 3: Manuel Carvajal Parra - m.carvajalp@uniandes.edu.co - 202014203.
+
 #ISIS1225 - Librerias de soporte
 
 Este proyecto contiene los Tipos abstractos de datos, estructuras de datos y algoritmos requeridos por el curso ISIS1225-Estructuras de Datos y Algoritmos

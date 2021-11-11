@@ -111,6 +111,18 @@ def printReq4(catalogo,fecha1,fecha2):
     print("Ultimos 3 avistamientos: ")
     printDatos(ultimos)
 
+def printReq5(catalogo, longitud1, longitud2, latitud1, latitud2):
+    lista=c.avistamientoLatLong(catalogo, longitud1, longitud2, latitud1, latitud2)
+    tamanio=lt.size(lista)
+    primeros=c.primerosCinco(lista)
+    ultimos=c.ultimosCinco(lista)
+    print("Hay " + str(tamanio) + " avistamientos en la latitud y longitud seleccionadas.\n")
+    print('Primeros 5 avistamientos: ')
+    printDatos(primeros)
+    print('Ultimos 5 avistamientos: ')
+    printDatos(ultimos)
+
+
 """
 Menu principal
 """
@@ -122,34 +134,34 @@ while True:
         start_time = time.process_time()
         catalogo=c.initCatalog()
         c.loadData(catalogo)
-        lst = catalogo['avistamientos']
-        primeros=c.primerosCinco(lst)
-        ultimos=c.ultimosCinco(lst)
+        lista=catalogo['avistamientos']
+        primeros=c.primerosCinco(lista)
+        ultimos=c.ultimosCinco(lista)
         print('Archivos cargados: ' + str(c.size(catalogo)))
         print('\n')
         print('Primeros 5 datos: \n')
         printDatos(primeros)
         print('Ultimos 5 datos: \n') 
         printDatos(ultimos)
-        stop_time = time.process_time()
-        elapsed_time_mseg = (stop_time - start_time)*1000
+        stop_time=time.process_time()
+        elapsed_time_mseg=(stop_time - start_time)*1000
         print("Tiempo empleado: " + str(elapsed_time_mseg))
 
     elif int(inputs[0]) == 2:
-        ciudad = input("Ingrese la ciudad a consultar: ")
-        start_time = time.process_time()
+        ciudad=input("Ingrese la ciudad a consultar: ")
+        start_time=time.process_time()
         printReq1(catalogo, ciudad)
-        stop_time = time.process_time()
-        elapsed_time_mseg = (stop_time - start_time)*1000
+        stop_time=time.process_time()
+        elapsed_time_mseg=(stop_time - start_time)*1000
         print("Tiempo empleado: " + str(elapsed_time_mseg))
 
     elif int(inputs[0]) == 3:
-        minimo = input("Ingrese la minima duración: ")
-        maximo = input("Ingrese la maxima duración: ")
-        start_time = time.process_time()
-        printReq2(catalogo,minimo,maximo)
-        stop_time = time.process_time()
-        elapsed_time_mseg = (stop_time - start_time)*1000
+        min=input("Ingrese la minima duración: ")
+        max=input("Ingrese la maxima duración: ")
+        start_time=time.process_time()
+        printReq2(catalogo,min,max)
+        stop_time=time.process_time()
+        elapsed_time_mseg=(stop_time - start_time)*1000
         print("Tiempo empleado: " + str(elapsed_time_mseg))
 
     elif int(inputs[0]) == 4:
@@ -157,8 +169,8 @@ while True:
         hora_f=input("Hora maxima (HH:MM): ")
         start_time=time.process_time()
         printReq3(catalogo, hora_i, hora_f)
-        stop_time = time.process_time()
-        elapsed_time_mseg = (stop_time - start_time)*1000
+        stop_time=time.process_time()
+        elapsed_time_mseg=(stop_time - start_time)*1000
         print("Tiempo empleado: " + str(elapsed_time_mseg))
 
     elif int(inputs[0]) == 5:
@@ -170,6 +182,16 @@ while True:
         elapsed_time_mseg = (stop_time - start_time)*1000
         print("Tiempo empleado: " + str(elapsed_time_mseg))
     
+    elif int(inputs[0]) == 6:
+        longitud1=input("Ingrese la longitud inicial: ")
+        longitud2=input("Ingrese la longitud final: ")
+        latitud1=input("Ingrese la latitud inicial: ")
+        latitud2=input("Ingrese la latitud final: ")
+        start_time=time.process_time()
+        printReq5(catalogo, longitud1, longitud2, latitud1, latitud2)
+        stop_time=time.process_time()
+        elapsed_time_mseg = (stop_time - start_time)*1000
+        print("Tiempo empleado: " + str(elapsed_time_mseg))
     else:
         sys.exit(0)
 sys.exit(0)

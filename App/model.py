@@ -24,7 +24,6 @@
  * Dario Correal - Version inicial
  """
 
-
 import config as cf
 from DISClib.ADT import list as lt
 from DISClib.DataStructures import mapentry as me
@@ -45,9 +44,8 @@ def newCatalog():
     catalogo["hourIndex"]=ordmap.newMap(omaptype="RBT", comparefunction= cmpHora)
     catalogo["coordIndex"]=ordmap.newMap(omaptype= "RBT", comparefunction= cmpLongitudes)
     catalogo["indexDuracion"]=ordmap.newMap(omaptype='RBT',comparefunction=cmpDuracion)
-    catalogo['dateIndex']=ordmap.newMap(omaptype='RBT',comparefunction=cmpDate)
+    catalogo["dateIndex"]=ordmap.newMap(omaptype='RBT',comparefunction=cmpDate)
     return catalogo
-
 
 def addAvistamiento(catalogo,avistamiento):
     lt.addLast(catalogo['avistamientos'], avistamiento)
@@ -59,27 +57,27 @@ def addAvistamiento(catalogo,avistamiento):
     return catalogo
 
 def NuevaCiudad(catalogo, avistamiento):
-    ciudadIndex = catalogo["indexCiudad"]
-    ciudad = avistamiento["city"]
-    existcity = ordmap.contains(ciudadIndex, ciudad)
-    if existcity:
-        c_entry = ordmap.get(ciudadIndex, ciudad)["value"]
+    ciudadIndex=catalogo["indexCiudad"]
+    ciudad=avistamiento["city"]
+    existciudad=ordmap.contains(ciudadIndex, ciudad)
+    if existciudad:
+        ciudad_entry=ordmap.get(ciudadIndex, ciudad)["value"]
     else:
-        c_entry = lt.newList()
-    lt.addLast(c_entry, avistamiento)
-    ordmap.put(ciudadIndex, ciudad, c_entry)
+        ciudad_entry=lt.newList()
+    lt.addLast(ciudad_entry, avistamiento)
+    ordmap.put(ciudadIndex, ciudad, ciudad_entry)
 
 def NuevaHora(catalogo, avistamiento):
-    horaIndex = catalogo["hourIndex"]
-    fecha = dtime.datetime.strptime(avistamiento["datetime"], '%Y-%m-%d %H:%M:%S')
-    hora = str(fecha.time())
-    existhour = ordmap.contains(horaIndex, hora)
-    if existhour:
-        h_entry = ordmap.get(horaIndex, hora)["value"]
+    horaIndex=catalogo["hourIndex"]
+    fecha=dtime.datetime.strptime(avistamiento["datetime"], '%Y-%m-%d %H:%M:%S')
+    hora=str(fecha.time())
+    existe=ordmap.contains(horaIndex, hora)
+    if existe:
+        hora_entry=ordmap.get(horaIndex, hora)["value"]
     else:
-        h_entry = lt.newList("SINGLE_LINKED", cmpfunction= cmpTiempos)
-    lt.addLast(h_entry, avistamiento)
-    ordmap.put(horaIndex, hora, h_entry)
+        hora_entry=lt.newList("SINGLE_LINKED", cmpfunction= cmpTiempos)
+    lt.addLast(hora_entry, avistamiento)
+    ordmap.put(horaIndex, hora, hora_entry)
 
 def CoordIndex(catalogo, avistamiento):
     coordIndex=catalogo["coordIndex"]
@@ -96,21 +94,21 @@ def DuracionIndex(arb, avistamiento):
     duracion=float(avistamiento['duration (seconds)']) 
     entrada=ordmap.get(arb, duracion)
     if entrada is None:
-        fechaentry = lt.newList()
+        fechaentry=lt.newList()
         ordmap.put(arb, duracion, fechaentry)
     else:
-        fechaentry = me.getValue(entrada)
+        fechaentry=me.getValue(entrada)
     lt.addLast(fechaentry,avistamiento)
 
 def FechaIndex(arb, avistamiento):
-    dato=avistamiento['datetime']
-    fecha=dtime.datetime.strptime(dato, '%Y-%m-%d %H:%M:%S')
+    date=avistamiento['datetime']
+    fecha=dtime.datetime.strptime(date, '%Y-%m-%d %H:%M:%S')
     entrada=ordmap.get(arb, fecha.date())
     if entrada is None:
-        fechaentry = lt.newList()
+        fechaentry=lt.newList()
         ordmap.put(arb, fecha.date(), fechaentry)
     else:
-        fechaentry = me.getValue(entrada)
+        fechaentry=me.getValue(entrada)
     lt.addLast(fechaentry,avistamiento)
 
 def cmpLongitudes(longitud1, longitud2):
@@ -154,8 +152,8 @@ def cmpTiempos(dato1, dato2):
         return -1
 
 def cmpLatitudes(dato1, dato2):
-    latitud1 = round(float(dato1["latitude"]), 2)
-    latitud2 = round(float(dato2["latitude"]), 2)
+    latitud1=round(float(dato1["latitude"]), 2)
+    latitud2=round(float(dato2["latitude"]), 2)
     if (latitud1<latitud2):
         return 0
     else:
@@ -206,12 +204,13 @@ def primerosCinco(lista):
 def ultimosCinco(lista):
     return lt.subList(lista,lt.size(lista)-4,5)
 
-def size(analyzer):
-    return lt.size(analyzer['avistamientos'])
+def size(catalogo):
+    return lt.size(catalogo['avistamientos'])
 
-def sizeIndex(analyzer, tipo):
-    return ordmap.size(analyzer[tipo])
+def sizeIndex(catalogo, tipo):
+    return ordmap.size(catalogo[tipo])
 
+"""Requerimiento 1"""
 def AvistamientoCiudad(catalogo, ciudad):
     existe=ordmap.contains(catalogo["indexCiudad"], ciudad)
     if existe:
@@ -228,6 +227,7 @@ def ultimosTres(lista):
 def primerosn(lista,n):
     return lt.subList(lista,1,n)
 
+"""Requerimiento 2"""
 def requerimiento2(catalogo,min,max):
     datos=catalogo['indexDuracion']
     llaves=ordmap.keys(datos,float(min),float(max))
@@ -262,8 +262,8 @@ def requerimiento2(catalogo,min,max):
     lt.addLast(respuesta,primerosn(ultimos,3))
     return respuesta
 
-def maxKey(analyzer, tipo):
-    return ordmap.maxKey(analyzer[tipo])
+def maxKey(catalogo, tipo):
+    return ordmap.maxKey(catalogo[tipo])
 
 def maximaDuracion(catalogo):
     map=catalogo['indexDuracion']
@@ -276,6 +276,7 @@ def maximaDuracion(catalogo):
     lt.addLast(respuesta,numero)
     return respuesta
 
+"""Requerimiento 3"""
 def avistamientoHora(catalogo, hora):
     existe=ordmap.contains(catalogo["hourIndex"], hora)
     if existe:
@@ -303,6 +304,7 @@ def avistamientoOrdenadoHora(catalogo, hora_i, hora_f):
         avistamientoHora2(catalogo, str(hora_nueva), orden)
     return orden
 
+"""Requerimiento 4"""
 def requerimiento4(catalogo,minimo,maximo):
     datos=catalogo['dateIndex']
     llaves=ordmap.keys(datos,date.fromisoformat(minimo),date.fromisoformat(maximo))
@@ -335,16 +337,26 @@ def requerimiento4(catalogo,minimo,maximo):
     lt.addLast(respuesta,primerosn(ultimos,3))
     return respuesta
 
-def minKey(analyzer, tipo):
-    return ordmap.minKey(analyzer[tipo])
+def minKey(catalogo, tipo):
+    return ordmap.minKey(catalogo[tipo])
 
 def fechaAntigua(catalogo):
     mapa=catalogo['dateIndex']
     llave=ordmap.minKey(mapa)
     pareja=ordmap.get(mapa,llave)
     valor=me.getValue(pareja)
-    num=lt.size(valor)
-    respuesta = lt.newList("LINKED_LIST")
+    numero=lt.size(valor)
+    respuesta=lt.newList("LINKED_LIST")
     lt.addLast(respuesta,llave)
-    lt.addLast(respuesta,num)
+    lt.addLast(respuesta,numero)
+    return respuesta
+
+"""Requerimiento 5"""
+def avistamientoLatLong(catalogo, longitud1, longitud2, latitud1, latitud2):
+    respuesta=lt.newList("ARRAY_LIST")
+    lista=ordmap.values(catalogo["coordIndex"], longitud1, longitud2)
+    for avistamiento in lt.iterator(lista):
+        for i in lt.iterator(avistamiento):
+            if float(i["latitude"])>=float(latitud1) and float(i["latitude"])<=float(latitud2):
+                lt.addLast(respuesta, i)
     return respuesta
